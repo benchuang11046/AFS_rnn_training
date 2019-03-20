@@ -1,6 +1,8 @@
+
+## Environment variable setting. Disable these when running task.
 import os
 
-# The APP variable from environment variable
+## The APP variable from environment variable. 
 os.environ['model_para'] = """{
         "epoch": 100,
         "LSTM_unit": 16,
@@ -8,9 +10,25 @@ os.environ['model_para'] = """{
         "model_name": "rnn_model.h5"
 }"""
 
-!pip uninstall -y tensorflow-gpu
-!pip install tensorflow
-!pip install afs==2.1.8
+## APM firehose information set by portal, and get from environment variable. To set the following code in notebook to test.
+# os.environ['PAI_DATA_DIR'] = """{
+#     "type": "apm-firehose",
+#     "data": {
+#         "username": "*****@gmail.com",
+#         "password": "*****",
+#         "apmUrl": "https://api-apm-adviotsense-demo-training.wise-paas.com",
+#         "timeRange": [],
+#         "timeLast": {},
+#         "job_config": {},
+#         "resultProfile": "ben_machine",
+#         "parameterList": ["pressure", "temperature"],
+#         "machineIdList": [221]
+#     }
+# }"""
+
+
+###############Training code###############
+
 
 import requests
 import pandas as pd
