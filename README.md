@@ -54,3 +54,59 @@ os.environ['PAI_DATA_DIR'] = """{
     }
 }"""
 ```
+
+## Influxdb firehose information
+Influxdb firehose information set by portal, and get from environment variable. To set the following code in notebook to test.
+
+```
+os.environ['PAI_DATA_DIR'] = """{
+      "type": "influxdb-firehose",
+      "data": {
+        "dataOutputType": "protobuf",
+        "dbType": "internal",
+        "serviceName": "string",
+        "serviceKey": "string",
+        "querySql": "string"
+      }
+}
+```
+
+
+## Postgresql firehose information
+Postgresql firehose information set by portal, and get from environment variable. To set the following code in notebook to test.
+
+```
+os.environ['PAI_DATA_DIR'] = """{
+      "type": "postgresql-firehose",
+      "data": {
+        "dataOutputType": "protobuf",
+        "dbType": "internal/external",
+        "serviceName": "string",
+        "serviceKey": "string",
+        "externalUrl": "string",
+        "querySql": "xxx"
+      }
+}
+```
+
+## S3 firehose information
+S3 firehose information set by portal, and get from environment variable. To set the following code in notebook to test.
+
+```
+os.environ['PAI_DATA_DIR'] = """{
+      "type": "s3",
+      "data": {
+        "dataOutputType": "protobuf",
+        "dbType": "internal/external",
+        "serviceName": "string",
+        "serviceKey": "string",
+        
+        "endPoint": "string",
+        "accessKey": "string",
+        "secretAccessKey": "string",
+        "bucketName": "string",
+        "BlobList": ["string"]
+      }
+}
+```
+

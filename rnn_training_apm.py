@@ -1,3 +1,7 @@
+## Install required python package
+!pip uninstall tensorflow-gpu
+!pip install tensorflow
+!pip install afs2-model
 
 ## Environment variable setting. Disable these when running task.
 import os
@@ -14,20 +18,20 @@ os.environ['model_para'] = """{
 # os.environ['PAI_DATA_DIR'] = """{
 #     "type": "apm-firehose",
 #     "data": {
-#         "username": "*****@gmail.com",
-#         "password": "*****",
-#         "apmUrl": "https://api-apm-adviotsense-demo-training.wise-paas.com",
+#         "username": "@@@@@YourSsoApmUsername@@@@@",
+#         "password": "@@@@@YourSsoApmPassword@@@@@",
+#         "apmUrl": "https://api-apm-acniotsense-develop.wise-paas.cn",
 #         "timeRange": [],
 #         "timeLast": {},
 #         "job_config": {},
 #         "resultProfile": "ben_machine",
 #         "parameterList": ["pressure", "temperature"],
-#         "machineIdList": [221]
+#         "machineIdList": [256]
 #     }
 # }"""
 
 
-###############Training code###############
+###############TRAINING CODE###############
 
 
 import requests
@@ -60,14 +64,13 @@ machineIdList = PAI_DATA_DIR['data']['machineIdList']
 
 def read_apm_data():
     # Connection Information
+    sso_url = 'https://portal-sso.wise-paas.cn/v2.0/auth/native'
     payload = dict()
     payload['username'] = sso_username
     payload['password'] = sso_password
 
     # Get Token through SSO Login
-    resp_sso = requests.post('https://portal-sso.wise-paas.com/v2.0/auth/native', 
-                     json=payload,
-                     verify=False)
+    resp_sso = requests.post(sso_url, json=payload, verify=False)
     header = dict()
     header['content-type'] = 'application/json'
     header['Authorization'] = 'Bearer ' + resp_sso.json()['accessToken']
