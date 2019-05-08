@@ -1,5 +1,5 @@
 ## Install required python package
-!pip uninstall tensorflow-gpu
+!pip uninstall -y tensorflow-gpu
 !pip install tensorflow
 !pip install afs2-model
 
