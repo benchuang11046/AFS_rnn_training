@@ -7,12 +7,17 @@
 import os
 
 ## The APP variable from environment variable. 
-os.environ['model_para'] = """{
-        "epoch": 100,
-        "LSTM_unit": 16,
-        "look_back": 12,
-        "model_name": "rnn_model.h5"
-}"""
+if 'model_para' not in os.environ:
+    os.environ['model_para'] = """{
+            "epoch": 100,
+            "LSTM_unit": 16,
+            "look_back": 12,
+            "model_name": "rnn_model.h5"
+    }"""
+    
+if 'sso_url' not in os.environ:
+    os.environ['sso_url'] = 'https://portal-sso.wise-paas.com/v2.0/auth/native'
+
 
 ## APM firehose information set by portal, and get from environment variable. To set the following code in notebook to test.
 # os.environ['PAI_DATA_DIR'] = """{
@@ -20,20 +25,17 @@ os.environ['model_para'] = """{
 #     "data": {
 #         "username": "@@@@@YourSsoApmUsername@@@@@",
 #         "password": "@@@@@YourSsoApmPassword@@@@@",
-#         "apmUrl": "https://api-apm-acniotsense-develop.wise-paas.cn",
+#         "apmUrl": "https://api-apm-1-0-40-adviotsense-afs.wise-paas.com",
 #         "timeRange": [],
 #         "timeLast": {},
 #         "job_config": {},
-#         "resultProfile": "ben_machine",
+#         "resultProfile": "data",
 #         "parameterList": ["pressure", "temperature"],
-#         "machineIdList": [256]
+#         "machineIdList": [3]
 #     }
 # }"""
 
-
 ###############TRAINING CODE###############
-
-
 import requests
 import pandas as pd
 import requests.packages.urllib3
@@ -50,7 +52,7 @@ requests.packages.urllib3.disable_warnings()
 
 
 global apmUrl
-global sso_username, sso_password
+global sso_username, sso_password, sso_url
 global resultProfile, feature_list, machineIdList
 
 PAI_DATA_DIR = json.loads(os.getenv('PAI_DATA_DIR',{}))
@@ -64,19 +66,19 @@ machineIdList = PAI_DATA_DIR['data']['machineIdList']
 
 def read_apm_data():
     # Connection Information
-    sso_url = 'https://portal-sso.wise-paas.cn/v2.0/auth/native'
+    sso_url = os.getenv('sso_url')
     payload = dict()
     payload['username'] = sso_username
     payload['password'] = sso_password
 
     # Get Token through SSO Login
     resp_sso = requests.post(sso_url, json=payload, verify=False)
+    print(resp_sso.text)
     header = dict()
     header['content-type'] = 'application/json'
     header['Authorization'] = 'Bearer ' + resp_sso.json()['accessToken']
 
-    # HIST_RAW_DATA API docs
-    # https://portal-apmapidoc-acniotsense-apmdemo.wise-paas.com.cn/#api-Data-RGetHistRawData
+    # HIST_RAW_DATA API docs: https://portal-apmapidoc-acniotsense-apmdemo.wise-paas.com.cn/#api-Data-RGetHistRawData
     APM_HIST = apmUrl + '/hist/raw/data'
 
     now = datetime.now()
