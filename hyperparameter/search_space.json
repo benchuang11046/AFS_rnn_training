@@ -1,0 +1,5 @@
+{
+    "epoch": {"_type":"randint","_value":[100, 200]},
+    "look_back": {"_type":"choice","_value":[10, 11, 12]},
+    "LSTM_unit": {"_type":"randint","_value":[10, 100]}
+}
