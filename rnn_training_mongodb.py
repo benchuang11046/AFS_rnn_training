@@ -3,6 +3,10 @@
 !pip install tensorflow
 !pip install afs2-model
 !pip install afs2-datasource
+!pip install nest_asyncio --timeout 300
+
+import nest_asyncio
+nest_asyncio.apply()
 
 ## Environment variable setting. Disable these when running task.
 import os
