@@ -12,12 +12,15 @@ nest_asyncio.apply()
 import os
 
 ## The APP variable from environment variable. 
-os.environ['model_para'] = """{
-        "epoch": 100,
-        "LSTM_unit": 16,
-        "look_back": 12,
-        "model_name": "rnn_model.h5"
-}"""
+if 'model_para' in os.environ:
+        pass
+else:
+        os.environ['model_para'] = """{
+                "epoch": 100,
+                "LSTM_unit": 16,
+                "look_back": 12,
+                "model_name": "rnn_model.h5"
+        }"""
 
 ## APM firehose information set by portal, and get from environment variable. To set the following code in notebook to test.
 # os.environ['PAI_DATA_DIR'] = """{
