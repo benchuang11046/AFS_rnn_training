@@ -1,7 +1,7 @@
 ## Install required python package
 !pip uninstall -y tensorflow-gpu
 !pip install tensorflow
-!pip install afs2-model==2.1.27.1
+!pip install afs2-model
 !pip install afs2-datasource==2.1.18
 
 ###############TRAINING CODE###############
