@@ -1,8 +1,9 @@
 ## Install required python package
 !pip uninstall -y tensorflow-gpu
+!pip install aifs-nni
 !pip install tensorflow
 !pip install afs2-model
-!pip install afs2-datasource==2.1.18
+!pip install afs2-datasource
 
 ###############TRAINING CODE###############
 import os
@@ -279,7 +280,7 @@ def read_mongo_data():
         username="",
         password="",
         host="",
-        port=27017,
+        port=,
         database="",
         collection=collection_name,
         querySql="{}"
@@ -382,7 +383,7 @@ def get_default_parameters():
         "epoch": 100,
         "LSTM_unit": 16,
         "look_back": 12,
-        "model_name": "rnn_model.h5"
+        "model_name": "rnn_model_hyper.h5"
     }
     return params
 
